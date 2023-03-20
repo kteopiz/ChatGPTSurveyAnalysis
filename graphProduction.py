@@ -90,7 +90,7 @@ def far_leftist_awareness_of_chatgpt():
 
 def political_chatGPT_plagiarism():
 
-    # will loop back to this, unsure of which graph to use, consult hameezz
+    # will loop back to this, unsure of which graph to use, consult hameez
 
     pass
 
@@ -109,8 +109,6 @@ def gender_chatGPT_commercial_use():
     bar_offset = 0.25
     multiplier = 0
     
-
-
     male_reponses_counter = Counter()
     female_responses_counter = Counter()
     other_responses_counter = Counter()
@@ -131,6 +129,7 @@ def gender_chatGPT_commercial_use():
                 other_responses_counter[row[QUESTION_ACCESSOR["use_commercially_prompt"]]] += 1
 
     # Sorting each counter to ensure that they are in "Yes" then "No" Order, standardizing the data
+    # can perhaps optimize to a range to generalize into an algorithm.. ill think about it
     male_reponses_counter = sorted(male_reponses_counter.most_common(), reverse= True)
     for item in male_reponses_counter:
         male_yes_no_responses.append(item[1])
@@ -171,9 +170,58 @@ def gender_chatGPT_commercial_use():
 
 
 def undergraduate_instant_gratification_study():
+    
+
+    # seraching for questions 9 and 12 in undergrad
+    # really trying to show students dont really care by what cost a mark comes by, they are fine not doing the work
+    # in order to get the mark.
+    # writing papers -> not binary, need to see which students are at a 1 or 2 on the spectrum
+    # education inhibitor -> also binary so this is a good double bar graph -> yes also for ethical inhibitor
+
+    #comparing to what?
+    # wrting papers : inhib
+    # 1) yes to yes, ethical but detrimental -> contradictory
+    # 2) yes to no, ethical but not detrimental
+    # 3) no to yes, not ethical and detrimental
+    # 4) no to no, not ethical and not detrimental
+
+    contradiction_to_other_counts = [0,0]
+
+    population_labels = [ "Contradictory Students", "Rest of Population"]
+
+    with open('chatGPT_ethics_survey_responses.csv', newline='') as csv_file:
+        data_accessor = list(csv.reader(csv_file))[1:]
+
+        for row in data_accessor:
+            if row[QUESTION_ACCESSOR["academia_status"]].__contains__('Student') == True:
+                print(row[QUESTION_ACCESSOR["plagiarism_for_essays_prompt"]], row[QUESTION_ACCESSOR["effect_on_student_learning"]])
+                if (int(row[QUESTION_ACCESSOR["effect_on_student_learning"]]) == 1 or int(row[QUESTION_ACCESSOR["effect_on_student_learning"]]) == 2 or int(row[QUESTION_ACCESSOR["effect_on_student_learning"]]) == 3) and row[QUESTION_ACCESSOR["plagiarism_for_essays_prompt"]] == "No":
+                    print('found c')
+                    contradiction_to_other_counts[0] += 1
+                else:
+                    print("found norm")
+                    contradiction_to_other_counts[1] += 1
+    
+    print(contradiction_to_other_counts)
+    explode = (0, 0.1)
+    fig, ax = plt.subplots()
+    ax.pie(contradiction_to_other_counts, explode=explode, labels=population_labels, autopct='%1.1f%%', shadow= True)
+    plt.legend()
+    plt.title("Contradictory Undergraduate Students who Believe ChatGPT inhibhits Student Development and is still Ethical for Essay Writing vs. the Rest of Undergraduates")
+    plt.axis('equal')
+    plt.show()
+
+    return "Display Closed"
+
+
+def upper_academia_plagarism():
     pass
 
 
+def academia_levels_on_chatgpt_usage():
+    pass
+
+ 
 
 
 
