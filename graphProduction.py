@@ -5,6 +5,7 @@ import csv
 import matplotlib.pyplot as plt
 import numpy as np
 from collections import Counter
+from matplotlib.lines import Line2D
 
 QUESTION_ACCESSOR = {
     "age_range" : 1,
@@ -22,7 +23,6 @@ QUESTION_ACCESSOR = {
     "instructor_use": 13,
     "personal_use": 14
 }
-
 
 def far_leftist_religions_bar_graph():
     """
@@ -105,15 +105,12 @@ def far_left_chatGPT_essay_plagiarism():
                 else:
                     far_left_results[1] += 1
     
-    print(far_left_results)
-
     fig, ax = plt.subplots()
     ax.pie(far_left_results, labels=answer_labels, autopct='%1.1f%%')
     plt.title("Far Left's Opinion on ChatGPT being Plagiarism when used in Student Written Works")
     plt.axis('equal')
     plt.legend()
     plt.show()
-
 
     return "Display Closed"
 
@@ -132,7 +129,7 @@ def far_right_chatGPT_essay_plagiarism():
                     far_right_results[0] += 1
                 else:
                     far_right_results[1] += 1
-    print(far_right_results)
+   
     fig, ax = plt.subplots()
     ax.pie(far_right_results, labels=answer_labels, autopct='%1.1f%%')
     plt.title("Far Left's Opinion on ChatGPT being Plagiarism when used in Student Written Works")
@@ -338,7 +335,6 @@ def upper_academia_plagarism():
     ax.pie(upper_academia_counts, explode= explode, labels=upper_academia_labels, autopct='%1.1f%%', shadow=True)
     plt.legend()
     plt.title("The Opinions of Faculty and Post-Undergraduate Students on if ChatGPT is Plagiarism for Writing Essays")
-    print(upper_academia_counts)
     plt.show()
     
 
@@ -348,9 +344,123 @@ def upper_academia_plagarism():
 
 
 def academia_levels_on_chatgpt_usage():
-    pass
+   
+    # tracking three questions, all binary
+    # 1) Yes/No to essay promots
+    # 2) Yes/No in a Research Setting
+    # 3) Yes/No for commerical/monetary purposes
+
+    # group masters students, PhD Students, and Post-Doctoral Fellows together as post_grad
+    # group part time and full time undergrads as undergrad
+    # group faculty, profs, and TA's as staff
+    undergrad_counter = Counter()
+    post_grad_counter = Counter()
+    staff_counter = Counter()
+
+    yes_results = []
+    no_results = []
+    
+    with open('chatGPT_ethics_survey_responses.csv', newline='') as csv_file:
+        data_accessor = list(csv.reader(csv_file))[1:]
+
+        for row in data_accessor:
+
+            # checks for undegrad students replies
+            if row[QUESTION_ACCESSOR["academia_status"]].__contains__("Student"):
+                undergrad_counter[row[QUESTION_ACCESSOR["plagiarism_for_essays_prompt"]]] += 1
+                undergrad_counter[row[QUESTION_ACCESSOR["use_for_research_prompt"]]] += 1
+                undergrad_counter[row[QUESTION_ACCESSOR["use_commercially_prompt"]]] += 1
+            
+            elif row[QUESTION_ACCESSOR["academia_status"]] == "PhD" or row[QUESTION_ACCESSOR["academia_status"]] == "Post-Doctoral Fellow" or row[QUESTION_ACCESSOR["academia_status"]] == "Master's Degree":
+                post_grad_counter[row[QUESTION_ACCESSOR["plagiarism_for_essays_prompt"]]] += 1
+                post_grad_counter[row[QUESTION_ACCESSOR["use_for_research_prompt"]]] += 1
+                post_grad_counter[row[QUESTION_ACCESSOR["use_commercially_prompt"]]] += 1
+            
+            else:
+                staff_counter[row[QUESTION_ACCESSOR["plagiarism_for_essays_prompt"]]] += 1
+                staff_counter[row[QUESTION_ACCESSOR["use_for_research_prompt"]]] += 1
+                staff_counter[row[QUESTION_ACCESSOR["use_commercially_prompt"]]] += 1
+
+    
+    print(undergrad_counter, post_grad_counter, staff_counter)
+
+
+    undergrad_results = undergrad_counter.most_common()
+    post_grad_results = post_grad_counter.most_common()
+    staff_results = staff_counter.most_common()
+
+    undergrad_population = undergrad_counter.total()
+    post_grad_population = post_grad_counter.total()
+    staff_population = staff_counter.total()
+
+
+    temp_for_processing = [undergrad_results, post_grad_results, staff_results]
+    temp_populations = [undergrad_population, post_grad_population, staff_population]
+    
+    for i in range(len(temp_for_processing)): 
+
+        # sort them to align in yes and no order
+        temp_for_processing[i] = sorted(temp_for_processing[i], reverse= True)
+
+        # convert the number to a percentage to be graphed
+        for j in range(len(temp_for_processing[i])):
+            temp_for_processing[i][j] = list(temp_for_processing[i][j]) # change to list so the elements can be changed
+            temp_for_processing[i][j][1] = round(temp_for_processing[i][j][1] / temp_populations[i] * 100, 2)
+            if j % 2 == 0:
+                yes_results.append(temp_for_processing[i][j][1])
+            else:
+                no_results.append(temp_for_processing[i][j][1])
+
+    colours = ["green", "cyan", "blue"]
+
+    legend_elements = [ Line2D([0],[0], marker='o',color="green", label='Undergraduate Result'),
+                        Line2D([0], [0], marker='o', color="cyan",label="Post-Graduate Result"),
+                        Line2D([0], [0], marker='o',color="blue",label="Staff Result")   
+                       ]
+
+
+    fig, ax = plt.subplots()
+    ax.legend(handles=legend_elements, loc='upper right')
+    plt.scatter(yes_results, no_results, c=colours)
+    plt.title("General Opinion of Academia Groups on if ChatGPT is Ethical in Various Settings")
+    plt.xlabel("Percentage of Academia Group which said 'Yes'")
+    plt.ylabel("Percentage of Academia Group which said 'No'")
+
+
+
+    plt.show()
+    
+   
+    
+
+    
+    
+    
+    
+
+    
+    
+    return "Display Closed"
+    
+
+        
+        # process the collected data from the counters
+
+        # Want the axes to be percentages of "yes" and "no" in comparison to the population of the counters
+        # pseudo is yes/no count divided by counter.total() then store these
+
+        # problems -> must sort so we are going in yes counts then no counts format to remain consistent (sorted reverse = True) -> will solve the issue
+            # the legend and storage must align with the groups
+            # yes and no results must be added 
+                                  
+                                
+
+
+    
 
 # scatter plot for joseph, continue on the train :)
+
+
 
  
 
