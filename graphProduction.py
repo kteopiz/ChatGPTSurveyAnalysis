@@ -88,14 +88,121 @@ def far_leftist_awareness_of_chatgpt():
         
 
 
-def political_chatGPT_plagiarism():
+def far_left_chatGPT_essay_plagiarism():
 
-    # will loop back to this, unsure of which graph to use, consult hameez
+    answer_labels = ["Yes" , "No"]
+    # Yes -> No for Indexes
+    far_left_results = [0,0]
 
-    pass
+    with open('chatGPT_ethics_survey_responses.csv', newline='') as csv_file:
+        data_accessor = list(csv.reader(csv_file))[1:]
+    
+    # far lefts are 1, # far rights are 5
+        for row in data_accessor:
+            if int(row[QUESTION_ACCESSOR["political_spectrum"]]) == 1:
+                if row[QUESTION_ACCESSOR["plagiarism_for_essays_prompt"]] == "Yes":
+                    far_left_results[0] += 1
+                else:
+                    far_left_results[1] += 1
+    
+    print(far_left_results)
 
-def political_chatGPT_research():
-    pass
+    fig, ax = plt.subplots()
+    ax.pie(far_left_results, labels=answer_labels, autopct='%1.1f%%')
+    plt.title("Far Left's Opinion on ChatGPT being Plagiarism when used in Student Written Works")
+    plt.axis('equal')
+    plt.legend()
+    plt.show()
+
+
+    return "Display Closed"
+
+def far_right_chatGPT_essay_plagiarism():
+    answer_labels = ["Yes" , "No"]
+    # Yes -> No for Indexes
+    far_right_results = [0,0]
+
+    with open('chatGPT_ethics_survey_responses.csv', newline='') as csv_file:
+        data_accessor = list(csv.reader(csv_file))[1:]
+    
+    # far lefts are 1, # far rights are 5
+        for row in data_accessor:
+            if int(row[QUESTION_ACCESSOR["political_spectrum"]]) == 5:
+                if row[QUESTION_ACCESSOR["plagiarism_for_essays_prompt"]] == "Yes":
+                    far_right_results[0] += 1
+                else:
+                    far_right_results[1] += 1
+    print(far_right_results)
+    fig, ax = plt.subplots()
+    ax.pie(far_right_results, labels=answer_labels, autopct='%1.1f%%')
+    plt.title("Far Left's Opinion on ChatGPT being Plagiarism when used in Student Written Works")
+    plt.axis('equal')
+    plt.legend()
+    plt.show()
+
+def political_far_left_chatGPT_research():
+
+    answer_labels = ["Yes" , "No"]
+    # Yes -> No for Indexes
+    far_left_results = [0,0]
+
+    with open('chatGPT_ethics_survey_responses.csv', newline='') as csv_file:
+        data_accessor = list(csv.reader(csv_file))[1:]
+    
+    # far lefts are 1, # far rights are 5
+        for row in data_accessor:
+            if int(row[QUESTION_ACCESSOR["political_spectrum"]]) == 1:
+                if row[QUESTION_ACCESSOR["use_for_research_prompt"]] == "Yes":
+                    far_left_results[0] += 1
+                else:
+                    far_left_results[1] += 1
+
+    fig, ax = plt.subplots()
+    ax.pie(far_left_results, labels=answer_labels, autopct='%1.1f%%')
+    plt.title("Far Left's Opinion on ChatGPT being Ethical for Research Purposes")
+    plt.axis('equal')
+    plt.legend()
+    plt.show()
+
+
+    return "Display Closed"
+
+def political_far_right_chatGPT_research():
+
+    answer_labels = ["Yes" , "No"]
+    # Yes -> No for Indexes
+
+    far_right_results = [0,0]
+
+    with open('chatGPT_ethics_survey_responses.csv', newline='') as csv_file:
+        data_accessor = list(csv.reader(csv_file))[1:]
+
+    # far lefts are 1, # far rights are 5
+        for row in data_accessor:
+    
+            if int(row[QUESTION_ACCESSOR["political_spectrum"]]) == 5:
+                if row[QUESTION_ACCESSOR["use_for_research_prompt"]] == "Yes":
+                    far_right_results[0] += 1
+                else:
+                    far_right_results[1] += 1
+
+
+
+
+    fig, ax = plt.subplots()
+    ax.pie(far_right_results, labels = answer_labels, autopct='%1.1f%%')
+    plt.title("Far Right's Opinion on ChatGPT being Ethical for Research Purposes")
+    plt.axis('equal')
+    plt.legend()
+    plt.show()
+
+
+    
+
+    
+
+    
+
 
 def gender_chatGPT_commercial_use():
 
@@ -194,15 +301,11 @@ def undergraduate_instant_gratification_study():
 
         for row in data_accessor:
             if row[QUESTION_ACCESSOR["academia_status"]].__contains__('Student') == True:
-                print(row[QUESTION_ACCESSOR["plagiarism_for_essays_prompt"]], row[QUESTION_ACCESSOR["effect_on_student_learning"]])
                 if (int(row[QUESTION_ACCESSOR["effect_on_student_learning"]]) == 1 or int(row[QUESTION_ACCESSOR["effect_on_student_learning"]]) == 2 or int(row[QUESTION_ACCESSOR["effect_on_student_learning"]]) == 3) and row[QUESTION_ACCESSOR["plagiarism_for_essays_prompt"]] == "No":
-                    print('found c')
                     contradiction_to_other_counts[0] += 1
                 else:
-                    print("found norm")
                     contradiction_to_other_counts[1] += 1
     
-    print(contradiction_to_other_counts)
     explode = (0, 0.1)
     fig, ax = plt.subplots()
     ax.pie(contradiction_to_other_counts, explode=explode, labels=population_labels, autopct='%1.1f%%', shadow= True)
@@ -215,11 +318,39 @@ def undergraduate_instant_gratification_study():
 
 
 def upper_academia_plagarism():
-    pass
+
+    # index 0 counts yes, index 1 counts no -> can make this constant later
+    upper_academia_labels = ["Yes", "No"]
+    upper_academia_counts = [0,0]
+    
+    with open('chatGPT_ethics_survey_responses.csv', newline='') as csv_file:
+        data_accessor = list(csv.reader(csv_file))[1:]
+
+        for row in data_accessor:
+            if (row[QUESTION_ACCESSOR["academia_status"]].__contains__("Student")) == False:
+                if row[QUESTION_ACCESSOR["plagiarism_for_essays_prompt"]] == "Yes":
+                    upper_academia_counts[0] += 1
+                else:
+                    upper_academia_counts[1] += 1
+    
+    explode = (0.1, 0)
+    fig, ax = plt.subplots()
+    ax.pie(upper_academia_counts, explode= explode, labels=upper_academia_labels, autopct='%1.1f%%', shadow=True)
+    plt.legend()
+    plt.title("The Opinions of Faculty and Post-Undergraduate Students on if ChatGPT is Plagiarism for Writing Essays")
+    print(upper_academia_counts)
+    plt.show()
+    
+
+                
+
+        
 
 
 def academia_levels_on_chatgpt_usage():
     pass
+
+# scatter plot for joseph, continue on the train :)
 
  
 
