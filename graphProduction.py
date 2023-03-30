@@ -52,7 +52,7 @@ QUESTION_ACCESSOR = {
 def far_leftist_religions_bar_graph():
     """
 
-    A pie graph representing the diverse religions within the Far Leftist respondents group 
+    A bar graph representing the diverse religions within the Far Leftist respondents group 
 
     """
 
@@ -124,14 +124,13 @@ def far_leftist_awareness_of_chatgpt():
     explode = (0, 0.2)
     fig, ax = plt.subplots()
     ax.pie(yes_no_results, explode=explode, colors=YES_NO_COLORS, labels=yes_no_labels, autopct='%1.1f%%', shadow= True)
-    plt.title("Far Leftist Respondent Gtroup's Knowledge of ChatGPT Existence prior to Survey")
+    plt.title("Far Leftist Respondent Group's Knowledge of ChatGPT Existence prior to Survey")
     plt.legend()
     plt.axis('equal')
     plt.show()
 
     return "Display Closed"
-        
-
+    
 
 def far_left_chatGPT_essay_plagiarism():
 
@@ -523,8 +522,6 @@ def academia_levels_on_chatgpt_usage():
     # Populating temporary lists to manipulate the data 
     temp_for_processing = [undergrad_results, post_grad_results, staff_results]
     temp_populations = [undergrad_population, post_grad_population, staff_population]
-
-    print(temp_for_processing)
     
     for i in range(len(temp_for_processing)): 
 
@@ -543,7 +540,7 @@ def academia_levels_on_chatgpt_usage():
                 no_results.append(temp_for_processing[i][j][PERCENTAGE_INDEX])
         
     colours = ["green", "cyan", "blue"]
-    print(yes_results, no_results)
+ 
     # Creating a legend to differntiate the data points
     legend_elements = [ Line2D([0],[0], marker='o',color="green", label='Undergraduate Result'),
                         Line2D([0], [0], marker='o', color="cyan",label="Post-Graduate Result"),
@@ -558,19 +555,16 @@ def academia_levels_on_chatgpt_usage():
     plt.xlabel("Percentage of Academia Group which said 'Yes'")
     plt.ylabel("Percentage of Academia Group which said 'No'")
 
-
-
     plt.show()
-    
     
     return "Display Closed"
 
 
-def groups_for_plag(): 
+def academia_groups_on_essay_prompt(): 
 
     """
     
-    A display of three pie charts which show each Academia's group responses to if ChatGPT is unethical for Student Writtem Works
+    A display of three pie charts which show each Academia's group responses to if ChatGPT is unethical for Student Written Works
     along with a bar graph which compares these percentages
     
     """
