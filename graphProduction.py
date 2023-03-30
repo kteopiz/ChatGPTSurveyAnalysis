@@ -567,28 +567,39 @@ def academia_levels_on_chatgpt_usage():
 
 
 def groups_for_plag(): 
+
+    """
+    
+    A display of three pie charts which show each Academia's group responses to if ChatGPT is unethical for Student Writtem Works
+    along with a bar graph which compares these percentages
+    
+    """
       
+    # Indexes of the lists which will hold the repsonses of each group and their total population
     YES_COUNT_INDEX = 0
     NO_COUNT_INDEX = 1
     TOTAL_POPULATION_COUNT_INDEX = 2
-
-    population_labels = ["Undergraduate Percentage", "Post-Graduate Percentage", "Faculty Percentage"]
-    pie_chart_labels = ['Yes', 'No']
-    pie_chart_colors = ['green', 'red']
 
     undergrad_counts = [0,0,0]
     post_grad_counts = [0,0,0]
     staff_counts = [0,0,0]
     all_population_percentages =[0,0,0]
 
+    population_labels = ["Undergraduate", "Post-Graduate", "Faculty"]
+    pie_chart_labels = ['Yes', 'No']
+    pie_chart_colors = ['green', 'red']
+
+
 
     # percentages for groups on whether or not they think chatGPT is plagarism for essay writing
 
     # "Percent of Population of each Group who think ChatGPT is plargarism for Essay Writing"
     with open('chatGPT_ethics_survey_responses.csv', newline='') as csv_file:
-        data_accessor = list(csv.reader(csv_file))[1:]
+        data_accessor = list(csv.reader(csv_file))[FIRST_RESPONDENT_ROW_INDEX:]
 
         for row in data_accessor:
+
+            # Populates counter lists for each Academia Group
             if row[QUESTION_ACCESSOR["academia_status"]].__contains__("Student"):
                 if row[QUESTION_ACCESSOR["plagiarism_for_essays_prompt"]] == "Yes":
                     undergrad_counts[YES_COUNT_INDEX] += 1
@@ -613,18 +624,19 @@ def groups_for_plag():
                     staff_counts[NO_COUNT_INDEX] += 1
 
                  
-
+    # Uses the counter lists to populate a new list of the percentages
     all_population_percentages = [
         round(undergrad_counts[YES_COUNT_INDEX] / undergrad_counts[TOTAL_POPULATION_COUNT_INDEX] * 100, 2) ,
         round(post_grad_counts[YES_COUNT_INDEX] / post_grad_counts[TOTAL_POPULATION_COUNT_INDEX] * 100, 2),
         round(staff_counts[YES_COUNT_INDEX] / staff_counts[TOTAL_POPULATION_COUNT_INDEX] * 100, 2)
         ]
     
+    # Storing the yes and no counts for graphing 
     undergrad_yes_no_compare = [undergrad_counts[YES_COUNT_INDEX], undergrad_counts[NO_COUNT_INDEX]]
     post_grad_yes_no_compare = [post_grad_counts[YES_COUNT_INDEX], post_grad_counts[NO_COUNT_INDEX]]
     staff_yes_no_compare = [staff_counts[YES_COUNT_INDEX], staff_counts[NO_COUNT_INDEX]]
 
-
+    # Creating a legend for colours used on the bar graph
     legend_elements = [ Line2D([0],[0], marker='o',color="green", label='Undergraduate Result'),
                         Line2D([0], [0], marker='o', color="cyan",label="Post-Graduate Result"),
                         Line2D([0], [0], marker='o',color="blue",label="Staff Result")   
@@ -651,6 +663,8 @@ def groups_for_plag():
     ax = plt.subplot2grid((3,2), (0,1), rowspan=3, colspan=2)
     plt.bar(population_labels, all_population_percentages, color=["green", "cyan", "blue"], edgecolor = 'black')
     plt.legend(handles=legend_elements, loc='upper left')
+    plt.ylabel("Percentage of the Population (%)")
+    plt.xlabel("Group Names")
     plt.title("Percentage of Each Academia Group's Population who believe ChatGPT is Plagarism for Essay Writing")
     plt.show()
 
