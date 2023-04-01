@@ -6,15 +6,15 @@ Menu to easily display all availble graphs from Graph Production file
 
 """
 
-
 MENU_IS_RUNNING = True
-NUM_OPTIONS= 12
+NUM_OPTIONS = 12
 
 
 while MENU_IS_RUNNING:
 
     print("Graph Selection Menu:\n")
 
+    # Option Menu in Terminal given to user
     print(
         " [1]: Religious Groups within the Far Left Respondent Group\n",
         "[2]: The prior knowledge of ChatGPT's existence within the Far Left Respondent Group\n",
