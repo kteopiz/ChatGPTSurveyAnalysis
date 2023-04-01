@@ -15,7 +15,7 @@ RESPONSE_LABEL_INDEX = 0
 # Slice this row for easier data filtering
 FIRST_RESPONDENT_ROW_INDEX = 1
 
-# Many lists exist containing counts of "Yes" and "No" Instances
+# Many lists exist containing lists which keep counts of "Yes" and "No" Responses from the respondents
 # Constants for where they are always placed
 YES_RESPONSE_INDEX = 0
 NO_RESPONSE_INDEX = 1
@@ -25,12 +25,6 @@ FAR_LEFTIST_RESPONSE_VALUE  = 1
 FAR_RIGHT_RESPONSE_VALUE = 5
 
 YES_NO_COLORS = ['green', 'red']
-
-"""
-
-TO DO: FIGURE OUT WHAT UR RETURNING, RN ITS JUST DISPLAY CLOSED
-
-"""
 
 QUESTION_ACCESSOR = {
     "age_range" : 1,
@@ -313,8 +307,7 @@ def gender_chatGPT_commercial_use():
             else:
                 other_responses_counter[row[QUESTION_ACCESSOR["use_commercially_prompt"]]] += 1
 
-    # Sorting each counter to ensure that they are in "Yes" then "No" Order, standardizing the data
-    # can perhaps optimize to a range to generalize into an algorithm.. ill think about it
+    # Sorting each counter to ensure that they are in "Yes" then "No" Order, standardizing the format of the data
 
     yes_or_no_index_in_counter = 1
 
@@ -547,7 +540,7 @@ def academia_levels_on_chatgpt_usage():
                         Line2D([0], [0], marker='o',color="blue",label="Staff Result")   
                        ]
 
-
+    print(yes_results)
     fig, ax = plt.subplots()
     ax.legend(handles=legend_elements, loc='upper right')
     plt.scatter(yes_results, no_results, c=colours)
@@ -584,10 +577,6 @@ def academia_groups_on_essay_prompt():
     pie_chart_colors = ['green', 'red']
 
 
-
-    # percentages for groups on whether or not they think chatGPT is plagarism for essay writing
-
-    # "Percent of Population of each Group who think ChatGPT is plargarism for Essay Writing"
     with open('chatGPT_ethics_survey_responses.csv', newline='') as csv_file:
         data_accessor = list(csv.reader(csv_file))[FIRST_RESPONDENT_ROW_INDEX:]
 
@@ -662,11 +651,7 @@ def academia_groups_on_essay_prompt():
     plt.title("Percentage of Each Academia Group's Population who believe ChatGPT is Plagarism for Essay Writing")
     plt.show()
 
-                
 
-
-
-    
 
 
 
