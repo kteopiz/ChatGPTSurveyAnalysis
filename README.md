@@ -2,11 +2,8 @@
 
 -> Short Description of the Project -> TO DO!!!!!!!!!!!!
 INCLUDE: How data was collected, main purpose of survey...
--> Allow Reader Access to the Google Sheet URL as well, although a CSV is already present in the GitHub
 
--> API Documentation ** UPDATE AS YOU WRITE THEM BELOW -> TO DO FOR FUNCTIONS!!!!!
-
--> Short Description of how the data is accesssed
+To collect the data, a Google Form survey was created and spread to peers and professors via. social media, email, and word of mouth. approximately 120 responses were collected from undergraduate, graduate, and professors from various Canadian universties and colleges, and students from international universities.
 
 The survey data has been copied to a CSV File called "chatGPT_ethics_survey_responses.csv" which is used to produce relevant tables, charts, and figures to represent findings about the collected data. 
 
