@@ -1,10 +1,12 @@
 # ChatGPT Ethics Survey Analysis
 
--> Short Description of the Project -> TO DO!!!!!!!!!!!!
-INCLUDE: How data was collected, main purpose of survey...
+**Project Description**
+With the release of ChatGPT, professors and students in Academia wondered if the groundbreaking technology would be an asset, or a hinderence to education. In our Computer Ethics class, we sought to answer the question of whether ChatGPT would more help or harm the educational experience in all fields unversity-level study. Using various teechnologies for Data Collection, Analysis, and Visualization, we collected data to answer the curiosities of the effects of ChatGPT.
 
+**How Data was Collected**
 To collect the data, a Google Form survey was created and spread to peers and professors via. social media, email, and word of mouth. approximately 120 responses were collected from undergraduate, graduate, and professors from various Canadian universties and colleges, and students from international universities.
 
+**How Collected Data was Organized and Formatted**
 The survey data has been copied to a CSV File called "chatGPT_ethics_survey_responses.csv" which is used to produce relevant tables, charts, and figures to represent findings about the collected data. 
 
 The CSV File is turned into a 2D List called "survey_response_rows". 
